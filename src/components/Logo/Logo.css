@@ -1,0 +1,6 @@
+.Tilt{
+  background-image: linear-gradient(to right, violet, purple);
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
