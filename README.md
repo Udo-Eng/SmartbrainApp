@@ -1,8 +1,8 @@
 # This is an AI project built with love from ZTM course on udemy thanks andrei
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-And  was styled  with [Tachyons](https://github.com/tachyons-css/tachyons).
-The Artifical Intelligence Model was implemented using Clarifai API for javascript project was bootstrapped with [Clarifai API](https://github.com/Clarifai/clarifai-javascript).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
+the Project was Styled  with [Tachyons](https://github.com/tachyons-css/tachyons).\
+The Artifical Intelligence Model was implemented using  [Clarifai API](https://github.com/Clarifai/clarifai-javascript) for javascript.
 
 
 ## Available Scripts
