@@ -68,7 +68,6 @@ class App extends Component {
   //Display method to set the box state
   displayFaceBox = (box) => {
     console.log('clicked');
-    console.log(box);
     this.setState({
       box
     })

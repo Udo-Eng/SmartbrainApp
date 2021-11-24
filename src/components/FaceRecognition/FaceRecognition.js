@@ -1,4 +1,5 @@
 import React from 'react'
+import './FaceRecognition.css'
 
 export default function FaceRecognition({ imageURL, box }) {
     return (
