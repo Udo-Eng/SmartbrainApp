@@ -124,7 +124,7 @@ class App extends Component {
   }
 
   render() {
-    const { imageURL } = this.state;
+    const { imageURL, box } = this.state;
     return (
       <div className="App">
         <Particles className='particles'
@@ -139,13 +139,9 @@ class App extends Component {
           <div className='rank'>
             <Rank />
           </div>
-
-
         </div>
         <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
-
-        <FaceRecognition imageURL={imageURL} />
-
+        <FaceRecognition imageURL={imageURL} box={box} />
       </div >
     );
   }
