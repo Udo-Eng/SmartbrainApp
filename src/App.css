@@ -24,3 +24,34 @@ button{
   right: 0;
   z-index: -1;
 }
+
+.header{
+  display: flex;
+  width: 50rem;
+}
+
+.rank{
+  align-self: flex-end;
+  margin-left: 12rem;
+}
+
+.logo{
+ align-self: flex-start;
+}
+
+@media only screen and (max-width: 600px) {
+  .header{
+  display: flex;
+  flex-direction: column;
+}
+
+.rank{
+  align-self: center;
+  margin-left: 12rem;
+}
+
+.logo{
+  text-align:center;
+ align-self: center;
+}
+}
