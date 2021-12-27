@@ -7,7 +7,7 @@ import SignIn from './components/SignIn/SignIn.js';
 import Register from './components/Register/Register.js';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition.js';
 import './App.css';
-import Particles from 'react-particles-js';
+// import Particles from 'react-particles-js';
 import API_KEY from './apiKeys';
 import Clarifai from 'clarifai';
 
@@ -18,24 +18,24 @@ const app = new Clarifai.App({
 });
 
 
-const ParticleOptions = {
-  "particles": {
-    "number": {
-      "value": 50
-    },
-    "size": {
-      "value": 3
-    }
-  },
-  "interactivity": {
-    "events": {
-      "onhover": {
-        "enable": true,
-        "mode": "repulse"
-      }
-    }
-  }
-}
+// const ParticleOptions = {
+//   "particles": {
+//     "number": {
+//       "value": 50
+//     },
+//     "size": {
+//       "value": 3
+//     }
+//   },
+//   "interactivity": {
+//     "events": {
+//       "onhover": {
+//         "enable": true,
+//         "mode": "repulse"
+//       }
+//     }
+//   }
+// }
 
 
 
@@ -47,12 +47,29 @@ class App extends Component {
       imageURL: '',
       box: {},
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      signinError: false,
+      // APIError: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: '',
+        joined: '',
+
+      }
     }
   }
+
+
+  // //just to test the API 
+  // componentDidMount() {
+  //   fetch('http://localhost:5000/').then(response => response.json())
+  //     .then(response => console.log(response));
+  // }
   calculateFaceLocation = (data) => {
     //function to calculate  face region 
-    const ClarifaiFace = data;
+    const ClarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
 
     //Dom manipulation 
     const image = document.getElementById('inputimage');
@@ -70,7 +87,6 @@ class App extends Component {
 
   //Display method to set the box state
   displayFaceBox = (box) => {
-    console.log('clicked');
     this.setState({
       box
     })
@@ -94,6 +110,20 @@ class App extends Component {
     this.setState({ route });
   }
 
+  //Tochange the state of signin 
+  onErrorSignin = (value) => {
+    this.setState({
+      signinError: value,
+    })
+  }
+  // setAPIError = () => {
+  //   this.setState({ APIError: !this.state.APIError })
+  // }
+  loadUser = (user) => {
+    this.setState({
+      user: Object.assign(this.state.user, user)
+    })
+  }
 
   onButtonSubmit = () => {
     this.setState({
@@ -113,57 +143,63 @@ class App extends Component {
         // '53e1df302c079b3db8a0a36033ed2d15',
         Clarifai.FACE_DETECT_MODEL,
         this.state.input)
-      // .then(response => response.json())
-      .then(data => {
-
-        this.displayFaceBox(this.calculateFaceLocation(data.outputs[0].data.regions[0].region_info.bounding_box))
+      // .then(data => {
+      //   this.displayFaceBox(this.calculateFaceLocation(data.outputs[0].data.regions[0].region_info.bounding_box));
+      // })
+      .then(response => {
+        console.log('hi', response)
+        if (response) {
+          fetch('http://localhost:5000/image', {
+            method: 'put',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }))
+            })
+        }
+        this.displayFaceBox(this.calculateFaceLocation(response))
       })
-      .catch(err => console.log(err));
-    //     // .then(response => {
-    //     //   console.log('hi', response)
-    //     //   if (response) {
-    //     //     fetch('http://localhost:3000/image', {
-    //     //       method: 'put',
-    //     //       headers: { 'Content-Type': 'application/json' },
-    //     //       body: JSON.stringify({
-    //     //         id: this.state.user.id
-    //     //       })
-    //     //     })
-
-    //     .then(count => {
-    //       this.setState(Object.assign(this.state.user, { entries: count }))
-    //     })
-
-    // }
-    //       this.displayFaceBox(this.calculateFaceLocation(response))
-    //     })
+      .catch(err => {
+        console.log(err);
+        // this.setAPIError();
+      }
+      );
   }
 
   render() {
-    const { imageURL, box, route, isSignedIn } = this.state;
+    const { imageURL, box, route, isSignedIn, user, signinError } = this.state;
+
     return (
       <div className="App">
-        <Particles className='particles'
+        {/* <Particles className='particles'
           params={ParticleOptions}
-        />
+        /> */}
         <Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
         {
           route === 'home' ?
-            <div>
+            (<div>
               <div className='header'>
                 <div className='logo'>
                   <Logo />
                 </div>
                 <div className='rank'>
-                  <Rank />
+                  <Rank
+                    name={user.name}
+                    entries={user.entries}
+                  />
                 </div>
               </div>
               <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
               <FaceRecognition imageURL={imageURL} box={box} />
-            </div > : (
+              {/* APIError={APIError} */}
+            </div >) : (
               route === 'signin' ?
-                <SignIn onRouteChange={this.onRouteChange} /> :
-                <Register onRouteChange={this.onRouteChange} />
+                <SignIn onRouteChange={this.onRouteChange} onErrorSignin={this.onErrorSignin} /> :
+                <Register onRouteChange={this.onRouteChange} user={user} loadUser={this.loadUser} signinError={signinError} />
             )
 
         }

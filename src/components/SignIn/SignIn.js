@@ -1,70 +1,129 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './SignIn.css'
 
 
-const SignIn = ({ onRouteChange }) => {
-    return (
-        <article class="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6  shadow-5 center">
-            <main className="pa4 black-80">
-                <form className="measure ">
-                    <fieldset
-                        id="sign_up"
-                        className="ba b--transparent ph0 mh0"
-                    >
-                        <legend className="f2 fw6 ph0 mh0">
-                            Sign In
-                        </legend>
-                        <div className="mt3">
-                            <label
-                                className="db fw6 lh-copy f6"
-                                for="email-address"
-                            >
-                                Email
-                            </label>
-                            <input
-                                className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                type="email"
-                                name="email-address"
-                                id="email-address"
-                            />
-                        </div>
-                        <div className="mv3">
-                            <label
-                                className="db fw6 lh-copy f6"
-                                for="password"
-                            >
-                                Password
-                            </label>
-                            <input
-                                className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                type="password"
-                                name="password"
-                                id="password"
-                            />
-                        </div>
-                    </fieldset>
-                    <div className="center">
-                        <input
-                            onClick={() => onRouteChange('home')}
-                            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib "
-                            type="submit"
-                            value="Sign in"
-                        />
+class SignIn extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            signedInEmail: ' ',
+            signedInPassword: ' ',
 
-                    </div>
-                    <div className="lh-copy mt3 center pointer  dim ">
-                        <p
-                            onClick={() => onRouteChange('register')}
-                            className="f5 link b black db "
+        }
+
+    }
+
+
+    onPasswordChange = (event) => {
+        this.setState({
+            signedInPassword: event.target.value,
+        })
+    }
+
+    onEmailChange = (event) => {
+        this.setState({
+            signedInEmail: event.target.value,
+        })
+    }
+
+    //function to send the post request to server 
+    onSubmit = () => {
+        const { signedInEmail, signedInPassword } = this.state;
+
+
+        fetch('http://localhost:5000/signin', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: signedInEmail,
+                password: signedInPassword,
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data === 'success') {
+                    this.props.onRouteChange('home');
+                    this.props.onErrorSignin(false);
+                } else {
+                    this.props.onRouteChange('register');
+                    this.props.onErrorSignin(true);
+                }
+            })
+    }
+
+    //Render method for component classes 
+    render() {
+        const { onRouteChange } = this.props;
+        return (
+            <article class="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6  shadow-5 center">
+                <main className="pa4 black-80">
+                    <div className="measure ">
+                        <fieldset
+                            id="sign_up"
+                            className="ba b--transparent ph0 mh0"
                         >
-                            Register
-                        </p>
-                    </div>
-                </form>
-            </main>
-        </article>
+                            <legend className="f2 fw6 ph0 mh0">
+                                Sign In
+                            </legend>
+                            <div className="mt3">
+                                <label
+                                    className="db fw6 lh-copy f6"
+                                    for="email-address"
+                                >
+                                    Email
+                                </label>
+                                <input
+                                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                                    type="email"
+                                    name="email-address"
+                                    id="email-address"
+                                    onChange={this.onEmailChange}
+                                />
+                            </div>
+                            <div className="mv3">
+                                <label
+                                    className="db fw6 lh-copy f6"
+                                    for="password"
+                                >
+                                    Password
+                                </label>
+                                <input
+                                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    onChange={this.onPasswordChange}
+                                />
+                            </div>
+                        </fieldset>
+                        <div className="center">
+                            <input
 
-    )
+                                onClick={
+                                    //finding a bug in react is so much fun
+                                    //was calling the function directly instead of returning it in a higher order function 
+                                    this.onSubmit}
+                                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib "
+                                type="submit"
+                                value="Sign in"
+                            />
+
+                        </div>
+                        <div className="lh-copy mt3 center pointer  dim ">
+                            <p
+                                onClick={() => onRouteChange('register')}
+                                className="f5 link b black db "
+                            >
+                                Register
+                            </p>
+                        </div>
+                    </div>
+                </main>
+            </article>
+
+        )
+    }
+
 }
 
 export default SignIn;
