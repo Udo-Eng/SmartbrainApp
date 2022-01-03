@@ -47,9 +47,13 @@ class Register extends Component {
             .then(response => response.json())
             .then(data => {
 
-                if (data) {
+                if (data.id) {
                     this.props.loadUser(data);
                     this.props.onRouteChange('home');
+                } else if (data === 'user not sucessfully registered') {
+                    this.props.onRouteChange('register');
+                    this.props.onErrorSignin(true);
+                    this.props.onErrorMessage(data);
                 }
 
             })
@@ -57,7 +61,6 @@ class Register extends Component {
 
 
     render() {
-
 
         return (
             <article class="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6  shadow-5 center" >
@@ -67,8 +70,9 @@ class Register extends Component {
                             <p
                                 className="b ph3 pv2 input-reset ba b--black white bg-red grow pointer f6 dib "
                             >
-                                please register first before signing in
-                            </p> : <div></div>
+                                {this.props.errorMessage}
+                            </p> : <div>
+                            </div>
                     }
                     <div className="measure ">
                         <fieldset

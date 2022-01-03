@@ -49,7 +49,7 @@ class App extends Component {
       route: 'signin',
       isSignedIn: false,
       signinError: false,
-      // APIError: false,
+      errorMessage: '',
       user: {
         id: '',
         name: '',
@@ -116,9 +116,15 @@ class App extends Component {
       signinError: value,
     })
   }
-  // setAPIError = () => {
-  //   this.setState({ APIError: !this.state.APIError })
-  // }
+
+  //Tochange the state of signin 
+  onErrorMessage = (value) => {
+    this.setState({
+      errorMessage: value,
+    })
+  }
+
+
   loadUser = (user) => {
     this.setState({
       user: Object.assign(this.state.user, user)
@@ -165,13 +171,12 @@ class App extends Component {
       })
       .catch(err => {
         console.log(err);
-        // this.setAPIError();
       }
       );
   }
 
   render() {
-    const { imageURL, box, route, isSignedIn, user, signinError } = this.state;
+    const { imageURL, box, route, isSignedIn, user, signinError, errorMessage } = this.state;
 
     return (
       <div className="App">
@@ -195,13 +200,12 @@ class App extends Component {
               </div>
               <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
               <FaceRecognition imageURL={imageURL} box={box} />
-              {/* APIError={APIError} */}
+
             </div >) : (
               route === 'signin' ?
-                <SignIn onRouteChange={this.onRouteChange} onErrorSignin={this.onErrorSignin} /> :
-                <Register onRouteChange={this.onRouteChange} user={user} loadUser={this.loadUser} signinError={signinError} />
+                <SignIn onRouteChange={this.onRouteChange} onErrorSignin={this.onErrorSignin} onErrorMessage={this.onErrorMessage} loadUser={this.loadUser} signinError={signinError} /> :
+                <Register onRouteChange={this.onRouteChange} user={user} loadUser={this.loadUser} signinError={signinError} onErrorSignin={this.onErrorSignin} errorMessage={errorMessage} onErrorMessage={this.onErrorMessage} />
             )
-
         }
       </div>
     );

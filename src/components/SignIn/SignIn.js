@@ -41,12 +41,22 @@ class SignIn extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                if (data === 'success') {
+                if (data.id) {
+                    this.props.loadUser(data);
                     this.props.onRouteChange('home');
                     this.props.onErrorSignin(false);
-                } else {
+                } else if (data === 'user login details is invalid') {
                     this.props.onRouteChange('register');
                     this.props.onErrorSignin(true);
+                    this.props.onErrorMessage(data);
+                } else if (data === 'Server Error please try again Later thanks') {
+                    this.props.onRouteChange('signin');
+                    this.props.onErrorSignin(true);
+                    this.props.onErrorMessage(data);
+                } else if (data === 'Unable to get user Please register again') {
+                    this.props.onRouteChange('register');
+                    this.props.onErrorSignin(true);
+                    this.props.onErrorMessage(data)
                 }
             })
     }
@@ -57,6 +67,15 @@ class SignIn extends Component {
         return (
             <article class="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6  shadow-5 center">
                 <main className="pa4 black-80">
+                    {
+                        this.props.signinError ?
+                            <p
+                                className="b ph3 pv2 input-reset ba b--black white bg-red grow pointer f6 dib "
+                            >
+                                {this.props.errorMessage}
+                            </p> : <div>
+                            </div>
+                    }
                     <div className="measure ">
                         <fieldset
                             id="sign_up"
