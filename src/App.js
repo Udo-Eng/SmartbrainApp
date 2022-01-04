@@ -152,7 +152,7 @@ class App extends Component {
     // .then(data => {
     //   this.displayFaceBox(this.calculateFaceLocation(data.outputs[0].data.regions[0].region_info.bounding_box));
     // })
-    fetch('http://localhost:5000/image', {
+    fetch('https://powerful-dusk-84124.herokuapp.com/image', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -162,7 +162,7 @@ class App extends Component {
       .then(response => {
 
         if (response) {
-          fetch('http://localhost:5000/image', {
+          fetch('https://powerful-dusk-84124.herokuapp.com/http:/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
