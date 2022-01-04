@@ -7,12 +7,17 @@ const Navigation = ({ onRouteChange, isSignedIn, resetState }) => {
         resetState();
         onRouteChange('signin')
     }
+
+    const NavSignOutFunc = () => {
+        resetState();
+        onRouteChange('signin')
+    }
     // debugger;
     if (isSignedIn) {
         return (
             <nav style={{ display: 'flex', justifyContent: 'flex-end' }}>
 
-                <p className='f3 dim link pa3 pointer white underline' onClick={() => onRouteChange('signin')}>Sign Out</p>
+                <p className='f3 dim link pa3 pointer white underline' onClick={() => NavSignOutFunc()}>Sign Out</p>
             </nav>
         )
     } else {
