@@ -47,15 +47,17 @@ class SignIn extends Component {
                     this.props.onErrorSignin(false);
                 } else if (data === 'user login details is invalid') {
                     this.props.onRouteChange('register');
-                    console.log(data);
                     this.props.onErrorSignin(true);
                     this.props.onErrorMessage(data);
                 } else if (data === 'Server Error please try again Later thanks') {
-                    this.props.onRouteChange('signin');
+
                     this.props.onErrorSignin(true);
                     this.props.onErrorMessage(data);
                 } else if (data === 'Unable to get user Please register again') {
                     this.props.onRouteChange('register');
+                    this.props.onErrorSignin(true);
+                    this.props.onErrorMessage(data)
+                } else if (data === 'Please enter the right details') {
                     this.props.onErrorSignin(true);
                     this.props.onErrorMessage(data)
                 }

@@ -1,6 +1,12 @@
 import './Navigation.css';
 
-const Navigation = ({ onRouteChange, isSignedIn }) => {
+
+const Navigation = ({ onRouteChange, isSignedIn, resetState }) => {
+
+    const NavFunc = () => {
+        resetState();
+        onRouteChange('signin')
+    }
     // debugger;
     if (isSignedIn) {
         return (
@@ -12,7 +18,7 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
     } else {
         return (
             <nav style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <p className='f3 dim link pa3 pointer white underline' onClick={() => onRouteChange('signin')}>Sign In </p>
+                <p className='f3 dim link pa3 pointer white underline' onClick={() => NavFunc()}>Sign In </p>
                 <p className='f3 dim link pa3 pointer white underline' onClick={() => onRouteChange('register')}>Register</p>
             </nav>
         );

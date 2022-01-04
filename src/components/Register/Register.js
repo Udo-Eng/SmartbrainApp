@@ -50,12 +50,24 @@ class Register extends Component {
                 if (data.id) {
                     this.props.loadUser(data);
                     this.props.onRouteChange('home');
+                } else if (data === 'error registering user') {
+                    this.props.onRouteChange('register');
+                    this.props.onErrorSignin(true);
+                    this.props.onErrorMessage(data);
+                } else if (data === 'Please enter the right details') {
+                    this.props.onRouteChange('register');
+                    this.props.onErrorSignin(true);
+                    this.props.onErrorMessage(data);
                 } else if (data === 'user not sucessfully registered') {
                     this.props.onRouteChange('register');
                     this.props.onErrorSignin(true);
                     this.props.onErrorMessage(data);
                 }
 
+            }).catch(err => {
+                this.props.onRouteChange('signin');
+                this.props.onErrorSignin(true);
+                this.props.onErrorMessage('error registering please try again later');
             })
     }
 

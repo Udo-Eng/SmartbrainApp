@@ -36,29 +36,29 @@ import './App.css';
 //     }
 //   }
 // }
+const initalState = {
+  input: '',
+  imageURL: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  signinError: false,
+  errorMessage: ' ',
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: '',
+    joined: '',
 
+  }
+}
 
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      input: '',
-      imageURL: '',
-      box: {},
-      route: 'signin',
-      isSignedIn: false,
-      signinError: false,
-      errorMessage: '',
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: '',
-        joined: '',
-
-      }
-    }
+    this.state = initalState;
   }
 
 
@@ -96,7 +96,9 @@ class App extends Component {
       input: event.target.value,
     })
   }
-
+  resetState = () => {
+    this.setState(initalState);
+  }
   onRouteChange = (route) => {
     if (route === 'home') {
       this.setState({
@@ -190,7 +192,7 @@ class App extends Component {
         {/* <Particles className='particles'
           params={ParticleOptions}
         /> */}
-        <Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
+        <Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} resetState={this.resetState} />
         {
           route === 'home' ?
             (<div>
@@ -210,7 +212,7 @@ class App extends Component {
 
             </div >) : (
               route === 'signin' ?
-                <SignIn onRouteChange={this.onRouteChange} onErrorSignin={this.onErrorSignin} onErrorMessage={this.onErrorMessage} loadUser={this.loadUser} signinError={signinError} /> :
+                <SignIn onRouteChange={this.onRouteChange} onErrorSignin={this.onErrorSignin} onErrorMessage={this.onErrorMessage} loadUser={this.loadUser} signinError={signinError} errorMessage={errorMessage} /> :
                 <Register onRouteChange={this.onRouteChange} user={user} loadUser={this.loadUser} signinError={signinError} onErrorSignin={this.onErrorSignin} errorMessage={errorMessage} onErrorMessage={this.onErrorMessage} />
             )
         }
