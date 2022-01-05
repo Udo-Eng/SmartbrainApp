@@ -1,9 +1,47 @@
 .form{
     width: 700px;
     background-color:white;
-background-image:
-radial-gradient(midnightblue 9px, transparent 10px),
-repeating-radial-gradient(midnightblue 0, midnightblue 4px, transparent 5px, transparent 20px, midnightblue 21px, midnightblue 25px, transparent 26px, transparent 50px);
-background-size: 30px 30px, 90px 90px;
-background-position: 0 0;
-}
+    background-image:
+        radial-gradient(midnightblue 9px, transparent 10px),
+        repeating-radial-gradient(midnightblue 0, midnightblue 4px, transparent 5px, transparent 20px, midnightblue 21px, midnightblue 25px, transparent 26px, transparent 50px);
+        background-size: 30px 30px, 90px 90px;
+        background-position: 0 0;
+ }
+
+ @media screen and (max-width:37.5rem){
+
+    .link{
+        display: flex;
+        flex-flow: row nowrap;
+         
+    }
+    .ma0 p {
+        width: 20rem;
+        height: auto;
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+ 
+ .form{
+        width:28rem;
+        height: 10rem;
+        background-color:white;
+        background-image:
+            radial-gradient(midnightblue 9px, transparent 10px),
+            repeating-radial-gradient(midnightblue 0, midnightblue 4px, transparent 5px, transparent 20px, midnightblue 21px, midnightblue 25px, transparent 26px, transparent 50px);
+            background-size: 30px 30px, 90px 90px;
+            background-position: 0 0;
+            
+    }
+    .pos{
+        margin: 0.8rem 0;
+        align-self: center;
+        
+    }
+    .resize{
+        flex: 0 0 4rem;
+        align-self: center;
+        
+    }
+  
+ }

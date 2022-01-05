@@ -1,4 +1,14 @@
-/* .dim{
-    color: #000;
-    opacity: 0.5;
-} */
+.link{
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+@media screen and (max-width: 37.5rem){
+    .link{
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items:center;
+    } 
+ }

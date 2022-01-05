@@ -7,3 +7,20 @@
     margin: 0;
     padding: 0;
 }
+
+@media screen and (max-width: 37.5rem){
+.set{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+    
+}
+.new div p {
+        width: 10rem;
+        height: auto;
+        font-size: 2rem;
+        padding: 0.5rem;
+    }
+  
+}

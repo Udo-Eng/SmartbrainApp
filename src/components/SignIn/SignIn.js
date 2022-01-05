@@ -50,7 +50,6 @@ class SignIn extends Component {
                     this.props.onErrorSignin(true);
                     this.props.onErrorMessage(data);
                 } else if (data === 'Server Error please try again Later thanks') {
-
                     this.props.onErrorSignin(true);
                     this.props.onErrorMessage(data);
                 } else if (data === 'Unable to get user Please register again') {

@@ -194,7 +194,7 @@ class App extends Component {
         <Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} resetState={this.resetState} />
         {
           route === 'home' ?
-            (<div>
+            (<div className="main">
               <div className='header'>
                 <div className='logo'>
                   <Logo />
@@ -209,7 +209,7 @@ class App extends Component {
               <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
               <FaceRecognition imageURL={imageURL} box={box} />
 
-            </div >) : (
+            </div>) : (
               route === 'signin' ?
                 <SignIn onRouteChange={this.onRouteChange} onErrorSignin={this.onErrorSignin} onErrorMessage={this.onErrorMessage} loadUser={this.loadUser} signinError={signinError} errorMessage={errorMessage} /> :
                 <Register onRouteChange={this.onRouteChange} user={user} loadUser={this.loadUser} signinError={signinError} onErrorSignin={this.onErrorSignin} errorMessage={errorMessage} onErrorMessage={this.onErrorMessage} />
